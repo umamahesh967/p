@@ -5,6 +5,9 @@ services:
       - .env
     image: sqshq/piggymetrics-config
     restart: always
+    build: config
+    ports:
+      - 8888:8888
     logging:
       options:
         max-size: "10m"
@@ -15,6 +18,7 @@ services:
       - .env
     image: sqshq/piggymetrics-registry
     restart: always
+    build: registry
     depends_on:
       config:
         condition: service_healthy
@@ -29,6 +33,7 @@ services:
     env_file:
       - .env
     image: sqshq/piggymetrics-gateway
+    build: gateway
     restart: always
     depends_on:
       config:
