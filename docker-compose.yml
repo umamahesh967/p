@@ -1,0 +1,44 @@
+version: '2.1'
+services:
+  config:
+    env_file:
+      - .env
+    image: sqshq/piggymetrics-config
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry:
+    env_file:
+      - .env
+    image: sqshq/piggymetrics-registry
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  gateway:
+    env_file:
+      - .env
+    image: sqshq/piggymetrics-gateway
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 80:4000
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  
+   
