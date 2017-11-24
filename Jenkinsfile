@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker-compose -f docker-compose.yml -f docker-compose-dev.yml up   --build --remove-orphans '
+                sh 'docker-compose -f docker-compose.yml -f up   --build --remove-orphans '
             }
         }
     }
